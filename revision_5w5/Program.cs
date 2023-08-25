@@ -12,11 +12,17 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowAlmostAll", policy =>
     {
-        builder.AllowAnyOrigin();
-        builder.AllowAnyHeader();
-        builder.AllowAnyMethod();
+        // TODO pour utiliser AllowCredentials, il faut spécifier les origines acceptés
+        // on ne peut plus utiliser AllowAnyOrigin
+        policy.WithOrigins("http://localhost:4200", "https://localhost:4200");
+        //policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        // TODO permettre l'utilisation des Cookies
+        policy.AllowCredentials();
+
     });
 });
 
@@ -46,7 +52,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseCors();
+app.UseCors("AllowAlmostAll");
 
 app.UseAuthentication();
 app.UseAuthorization();

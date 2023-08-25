@@ -1,2 +1,8 @@
 <h2>Liste de chats</h2>
 <div>nombre de chats : </div>
+
+<div *ngIf="hasCookie()"> j'ai un cookie</div>
+<div *ngIf="!hasCookie()"> j'ai pas de cookie</div>
+
+<button (click)="addCookie()">ajouter</button>
+<button (click)="removeCookie()">retirer</button>
